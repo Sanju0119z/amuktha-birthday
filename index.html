@@ -36,7 +36,7 @@ button:focus-visible,.file-label:focus-visible{outline:2px solid #b28db6;outline
 .walk-character{flex:0 0 clamp(72px,22vw,112px);width:clamp(72px,22vw,112px);transform:translateX(-38vw);opacity:0}
 .birthday-walk-scene.active .walk-character{animation:walkIn 2.25s cubic-bezier(.22,.75,.28,1) forwards}
 .walk-character svg{display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 4px 5px #9d758a20)}
-.walk-legs{transform-origin:55px 105px;animation:tinyWalk .25s ease-in-out infinite alternate}
+.walk-legs{transform-origin:55px 105px}.leg{transform-box:fill-box;transform-origin:50% 0}.birthday-walk-scene.active .leg-front{animation:stepFront .34s ease-in-out infinite alternate}.birthday-walk-scene.active .leg-back{animation:stepBack .34s ease-in-out infinite alternate}.birthday-walk-scene.active .walk-character svg{animation:bodyBounce .34s ease-in-out infinite alternate}
 .walk-message{opacity:0;transform:translateY(8px);text-align:left;max-width:62%;position:relative;z-index:1}
 .birthday-walk-scene.active .walk-message{animation:messageArrives .7s ease-out 1.65s forwards}
 .walk-kicker,.walk-sub{display:block;font:italic 10px/1.6 Georgia,serif;color:#a17d99;letter-spacing:.4px}
@@ -47,11 +47,11 @@ button:focus-visible,.file-label:focus-visible{outline:2px solid #b28db6;outline
 .birthday-walk-scene.active .walk-sparkle{animation:twinkle 1.5s ease-in-out 1.8s 2}
 .sparkle-one{left:8%;top:17%;font-size:22px}.sparkle-two{right:8%;bottom:18%;font-size:28px;animation-delay:2.1s!important}
 @keyframes walkIn{0%{transform:translateX(-38vw);opacity:0}12%{opacity:1}25%{transform:translateX(-22vw)}40%{transform:translateX(-13vw)}55%{transform:translateX(-6vw)}70%{transform:translateX(0)}82%{transform:translateX(2px)}100%{transform:translateX(0);opacity:1}}
-@keyframes tinyWalk{from{transform:rotate(-4deg) translateY(0)}to{transform:rotate(4deg) translateY(-2px)}}
+@keyframes stepFront{from{transform:rotate(-23deg) translateY(-1px)}to{transform:rotate(21deg) translateY(1px)}}@keyframes stepBack{from{transform:rotate(21deg) translateY(1px)}to{transform:rotate(-23deg) translateY(-1px)}}@keyframes bodyBounce{from{transform:translateY(0) rotate(-1deg)}to{transform:translateY(-2px) rotate(1deg)}}
 @keyframes messageArrives{to{opacity:1;transform:translateY(0)}}
 @keyframes twinkle{0%,100%{opacity:0;transform:scale(.6) rotate(-15deg)}50%{opacity:1;transform:scale(1.15) rotate(12deg)}}
 @media(max-width:420px){.birthday-walk-scene{min-height:137px;gap:5px;padding:9px 5px}.walk-character{flex-basis:74px;width:74px}.walk-message strong{font-size:20px}.walk-kicker{font-size:9px}.walk-sub{font-size:8px}}
-@media(prefers-reduced-motion:reduce){.walk-character,.walk-legs,.walk-message,.walk-sparkle{animation:none!important;transform:none!important;opacity:1!important}.walk-character{margin-left:0}}
+@media(prefers-reduced-motion:reduce){.walk-character,.walk-legs,.leg,.walk-character svg,.walk-message,.walk-sparkle{animation:none!important;transform:none!important;opacity:1!important}.walk-character{margin-left:0}}
 </style></head><body><main>
 <div class="topline"><span class="brand">little things ♡</span><span>made for Amuktha</span></div>
 <section class="hero" id="welcome"><div class="eyebrow">a little birthday letter</div><div class="envelope">💌</div><h1>Hii, <em>Amuktha!</em></h1><p class="lead">I made you a tiny corner of the internet, filled with birthday wishes, soft colours, and a little love. Shall we open it?</p><div class="buttons"><button class="primary" id="yesBtn">Open your surprise ♡</button><button id="noBtn">Not yet ☁️</button></div><p class="hint" id="hint">take your time, birthday girl ✿</p></section>
@@ -60,7 +60,7 @@ button:focus-visible,.file-label:focus-visible{outline:2px solid #b28db6;outline
   <div class="walk-character" aria-hidden="true">
     <svg viewBox="0 0 110 142" role="img" aria-label="Cute illustrated birthday girl">
       <ellipse cx="55" cy="133" rx="26" ry="5" fill="#c9a9bc" opacity=".25"/>
-      <g class="walk-legs"><path d="M43 103 Q39 117 34 126" fill="none" stroke="#805b64" stroke-width="7" stroke-linecap="round"/><path d="M66 103 Q73 115 79 124" fill="none" stroke="#805b64" stroke-width="7" stroke-linecap="round"/><path d="M24 128 Q34 123 40 129" fill="none" stroke="#f4dce5" stroke-width="8" stroke-linecap="round"/><path d="M72 127 Q82 121 88 127" fill="none" stroke="#f4dce5" stroke-width="8" stroke-linecap="round"/></g>
+      <g class="walk-legs"><g class="leg leg-back"><path d="M66 103 Q73 115 79 124" fill="none" stroke="#805b64" stroke-width="7" stroke-linecap="round"/><path d="M72 127 Q82 121 88 127" fill="none" stroke="#f4dce5" stroke-width="8" stroke-linecap="round"/></g><g class="leg leg-front"><path d="M43 103 Q39 117 34 126" fill="none" stroke="#805b64" stroke-width="7" stroke-linecap="round"/><path d="M24 128 Q34 123 40 129" fill="none" stroke="#f4dce5" stroke-width="8" stroke-linecap="round"/></g></g>
       <path d="M34 69 Q55 58 77 70 L83 105 Q56 117 28 105Z" fill="#e8d9f5" stroke="#c5acd9" stroke-width="1.5"/>
       <path d="M34 75 Q55 88 78 74 L83 104 Q57 119 28 104Z" fill="#f3d8e5"/>
       <path d="M34 78 L24 91 M76 78 L87 90" stroke="#f1c9d9" stroke-width="8" stroke-linecap="round"/>
