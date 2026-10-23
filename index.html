@@ -53,19 +53,20 @@ button:focus-visible,.file-label:focus-visible{outline:2px solid #b28db6;outline
 @media(max-width:420px){.birthday-walk-scene{min-height:137px;gap:5px;padding:9px 5px}.walk-character{flex-basis:74px;width:74px}.walk-message strong{font-size:20px}.walk-kicker{font-size:9px}.walk-sub{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.walk-character,.walk-legs,.leg,.walk-character svg,.walk-message,.walk-sparkle{animation:none!important;transform:none!important;opacity:1!important}.walk-character{margin-left:0}}
 
-/* Real-time 3D anime birthday girl */
-.walk-character{flex:0 0 clamp(130px,38vw,210px);width:clamp(130px,38vw,210px);min-width:130px;transform:none;opacity:1;position:relative;z-index:2}
-.walk-character svg{display:none!important}
-#birthday3DCanvas{display:block;width:100%;height:230px;max-width:210px;outline:0;touch-action:pan-y}
-.birthday-walk-scene.active .walk-character{animation:none!important}
-@media(max-width:520px){#birthday3DCanvas{height:195px}.walk-character{flex-basis:clamp(120px,36vw,165px);width:clamp(120px,36vw,165px);min-width:120px}}
+/* Responsive 3D scene with a graceful illustrated fallback */
+.walk-character{flex:0 0 clamp(108px,32vw,165px);width:clamp(108px,32vw,165px);min-width:108px;transform:none;opacity:1;position:relative;z-index:2}
+.walk-character svg{display:block!important;width:100%;height:auto;max-height:200px}
+#birthday3DCanvas{display:none;width:100%;height:215px;max-width:165px;outline:0;touch-action:pan-y}
+.walk-character.three-ready svg{display:none!important}.walk-character.three-ready #birthday3DCanvas{display:block}
+.birthday-walk-scene.active .walk-character{animation:none!important}.walk-message{max-width:calc(100% - 120px);min-width:0;overflow-wrap:anywhere}
+@media(max-width:520px){.birthday-walk-scene{gap:5px;padding:10px 5px}.walk-character{flex-basis:clamp(100px,31vw,135px);width:clamp(100px,31vw,135px);min-width:100px}#birthday3DCanvas{height:190px;max-width:135px}.walk-message{max-width:calc(100% - 105px)}.walk-message strong{font-size:clamp(17px,5vw,23px)}.walk-kicker{font-size:9px}}
 </style></head><body><main>
 <div class="topline"><span class="brand">little things ♡</span><span>made for Amuktha</span></div>
 <section class="hero" id="welcome"><div class="eyebrow">a little birthday letter</div><div class="envelope">💌</div><h1>Hii, <em>Amuktha!</em></h1><p class="lead">I made you a tiny corner of the internet, filled with birthday wishes, soft colours, and a little love. Shall we open it?</p><div class="buttons"><button class="primary" id="yesBtn">Open your surprise ♡</button><button id="noBtn">Not yet ☁️</button></div><p class="hint" id="hint">take your time, birthday girl ✿</p></section>
 <section class="section hidden" id="birthday"><div class="birthday-walk-scene" id="birthdayWalkScene" aria-label="A cute animated character walks over to wish Amuktha a happy birthday">
   <div class="walk-sparkle sparkle-one">✦</div><div class="walk-sparkle sparkle-two">✧</div>
   <div class="walk-character" aria-hidden="true">
-    <canvas id="birthday3DCanvas" aria-label="Cute 3D anime-style birthday girl"></canvas>
+    <canvas id="birthday3DCanvas" aria-label="Cute 3D anime birthday girl"></canvas>
     <svg viewBox="0 0 110 142" role="img" aria-label="Cute illustrated birthday girl">
       <ellipse cx="55" cy="133" rx="26" ry="5" fill="#c9a9bc" opacity=".25"/>
       <g class="walk-legs"><g class="leg leg-back"><path d="M66 103 Q73 115 79 124" fill="none" stroke="#805b64" stroke-width="7" stroke-linecap="round"/><path d="M72 127 Q82 121 88 127" fill="none" stroke="#f4dce5" stroke-width="8" stroke-linecap="round"/></g><g class="leg leg-front"><path d="M43 103 Q39 117 34 126" fill="none" stroke="#805b64" stroke-width="7" stroke-linecap="round"/><path d="M24 128 Q34 123 40 129" fill="none" stroke="#f4dce5" stroke-width="8" stroke-linecap="round"/></g></g>
@@ -102,44 +103,7 @@ function confetti(n=70){const colors=['#d8b9df','#efc4d5','#f4dfb6','#c8d9cf','#
 $('yesBtn').onclick=()=>{['birthday','extras','memories','footer'].forEach(id=>$(id).classList.remove('hidden'));$('welcome').classList.add('hidden');$('birthdayWalkScene').classList.add('active');if(typeof startBirthday3D==='function')startBirthday3D();confetti(100)};$('noBtn').onclick=()=>{$('hint').textContent=['No rush at all ☁️','A tiny surprise is waiting whenever you are ready ♡','I saved the prettiest wishes for you ✿'][Math.floor(Math.random()*3)]};$('secretBtn').onclick=()=>{$('secret').classList.toggle('hidden');if(!$('secret').classList.contains('hidden'))confetti(20)};
 const wishes=['May a wish you’ve kept quietly in your heart come true. 🌠','May this year bring you people who feel like sunshine. ☀️','May you find courage for new things and peace in the little ones. 🌷','May lovely surprises find you when you least expect them. 🦋','May you always feel proud of the person you are becoming. 💜'],compliments=['You make the world a little warmer just by being you. ♡','You deserve the same kindness you give to others. 🌷','Your dreams are worth believing in. ✨','You are allowed to grow at your own pace. 🌱','There is only one you—and that is a lovely thing. 🦋'],jar=['Take a breath. You are doing better than you think. ☁️','A soft day is still a good day. 🌷','You do not have to have everything figured out today. 💜','There are so many beautiful little things still ahead. ✨','You deserve rest, joy, and good people around you. ♡'];function pick(arr,id){$(id).textContent=arr[Math.floor(Math.random()*arr.length)]}$('wishBtn').onclick=()=>pick(wishes,'wishText');$('complimentBtn').onclick=()=>pick(compliments,'compliment');$('jarBtn').onclick=()=>pick(jar,'jarText');
 $('shareBtn').onclick=async()=>{try{if(navigator.share)await navigator.share({title:'A Little Surprise for Amuktha ♡',text:'A birthday page made just for you!',url:location.href});else{await navigator.clipboard.writeText(location.href);alert('Surprise link copied ♡')}}catch(e){}};
-$('cardBtn').onclick=()=>{const w=window.open('','_blank');if(!w){alert('Allow pop-ups to open your birthday card.');return}w.document.write('<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Happy Birthday, Amuktha ♡</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(140deg,#fff7fb,#f1e8f8,#fff8ef);font-family:Georgia,serif;color:#705878;text-align:center}.card{margin:20px;padding:40px 24px;max-width:440px;background:#fffdfb;border:1px solid white;box-shadow:0 18px 50px #97749b20}h1{font-size:clamp(2.4rem,9vw,4rem);font-weight:normal;color:#a17da7}p{line-height:1.9}button{border:1px solid #e7d6e5;border-radius:30px;background:white;color:#765e7b;padding:12px 18px}</style></head><body><div class="card"><div style="font-size:48px">🎂</div><div style="letter-spacing:3px;font-size:10px">A LITTLE WISH FOR YOU</div><h1>Happy Birthday,<br>Amuktha ♡</h1><p>May your days feel softer, your laughter come easier, and your dreams grow into beautiful things. You deserve a year full of lovely surprises.</p><div style="font-size:25px">🌷 ✿ 🦋</div><p>made with love ♡</p><button onclick="window.print()">Print / save card</button></div><script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-<script>
-let birthday3DStarted=false;
-function startBirthday3D(){
- if(birthday3DStarted)return; const canvas=document.getElementById('birthday3DCanvas');
- if(!canvas||!window.THREE)return; birthday3DStarted=true;
- const THREE=window.THREE,scene=new THREE.Scene();
- const camera=new THREE.PerspectiveCamera(34,1,.1,100);camera.position.set(0,1.55,7.7);camera.lookAt(0,1.25,0);
- const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.7));renderer.setClearColor(0x000000,0);renderer.outputColorSpace=THREE.SRGBColorSpace;
- scene.add(new THREE.HemisphereLight(0xfff4ff,0xb49ab9,2.1));const key=new THREE.DirectionalLight(0xffeadf,2.5);key.position.set(-3,5,5);scene.add(key);const rim=new THREE.DirectionalLight(0xd8c8ff,1.5);rim.position.set(3,2,-3);scene.add(rim);
- const mat=(color,roughness=.78)=>new THREE.MeshStandardMaterial({color,roughness});
- const skin=mat(0xffd6bd),hair=mat(0x55354e),hairLight=mat(0x70465f),dress=mat(0xf0cce5),dressTop=mat(0xe3c9f5),shoe=mat(0xf9e7ef),white=mat(0xfffbff),iris=mat(0x493045),blush=new THREE.MeshStandardMaterial({color:0xf39cb5,transparent:true,opacity:.72});
- const girl=new THREE.Group();scene.add(girl);girl.position.x=-2.25;
- function ball(parent,m,x,y,z,sx,sy,sz){const o=new THREE.Mesh(new THREE.SphereGeometry(1,20,16),m);o.position.set(x,y,z);o.scale.set(sx,sy,sz);parent.add(o);return o}
- function limb(parent,m,r1,r2,len){const o=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,len,12),m);parent.add(o);return o}
- ball(girl,hair,0,2.55,-.12,.63,.72,.43);ball(girl,hairLight,-.43,2.08,-.08,.18,.63,.22);ball(girl,hairLight,.43,2.08,-.08,.18,.63,.22);
- ball(girl,skin,0,1.82,0,.31,.39,.25);ball(girl,dressTop,0,1.86,.02,.35,.39,.28);
- const skirt=new THREE.Mesh(new THREE.ConeGeometry(.62,.95,32),dress);skirt.position.set(0,1.25,0);skirt.scale.z=.72;girl.add(skirt);
- const hem=new THREE.Mesh(new THREE.TorusGeometry(.43,.055,8,32),shoe);hem.rotation.x=Math.PI/2;hem.position.set(0,.79,0);hem.scale.set(1,.72,1);girl.add(hem);
- ball(girl,skin,0,2.65,.18,.49,.57,.4);ball(girl,hair,0,3.02,.12,.5,.27,.42);
- for(let i=-2;i<=2;i++)ball(girl,hairLight,i*.16,2.93,.43,.13,.23,.12);
- ball(girl,hairLight,-.48,2.55,.1,.13,.37,.15);ball(girl,hairLight,.48,2.55,.1,.13,.37,.15);
- for(const x of [-.19,.19]){ball(girl,white,x,2.69,.535,.105,.14,.045);ball(girl,iris,x+.012,2.68,.574,.065,.095,.025);ball(girl,white,x+.025,2.72,.594,.023,.03,.012);ball(girl,blush,x*1.75,2.51,.51,.095,.045,.018)}
- const smile=new THREE.Mesh(new THREE.TorusGeometry(.075,.012,6,16,Math.PI),mat(0x9a5d70));smile.position.set(0,2.48,.56);smile.rotation.z=Math.PI;girl.add(smile);
- ball(girl,mat(0xf4b8d2),-.37,3.12,.28,.13,.09,.055);ball(girl,mat(0xf4b8d2),-.23,3.12,.28,.13,.09,.055);ball(girl,mat(0xfff2fa),-.3,3.12,.33,.035,.035,.025);
- const arms=[],legs=[];
- function makeArm(x,side){const pivot=new THREE.Group();pivot.position.set(x,2.02,.02);girl.add(pivot);const upper=limb(pivot,skin,.105,.085,.48);upper.position.y=-.22;const hand=ball(pivot,skin,0,-.49,.01,.105,.12,.1);ball(pivot,dressTop,0,-.07,0,.15,.15,.15);arms.push({pivot,side,hand});return pivot}
- makeArm(-.32,-1);makeArm(.32,1);
- for(const x of [-.2,.2]){const p=new THREE.Group();p.position.set(x,.88,0);girl.add(p);const leg=limb(p,skin,.095,.085,.42);leg.position.y=-.2;ball(p,shoe,.015,-.43,.09,.17,.09,.24);legs.push({pivot:p,side:x<0?-1:1})}
- const flower=new THREE.Group();flower.position.set(.72,2.55,.15);girl.add(flower);for(let i=0;i<5;i++){const a=i*Math.PI*2/5;const petal=ball(flower,mat(0xf6c6dd),Math.cos(a)*.12,Math.sin(a)*.12,0,.09,.12,.055);petal.rotation.z=a}ball(flower,mat(0xffe8a9),0,0,.04,.07,.07,.05);
- const shadow=new THREE.Mesh(new THREE.CircleGeometry(.72,32),new THREE.MeshBasicMaterial({color:0xb99db8,transparent:true,opacity:.18}));shadow.rotation.x=-Math.PI/2;shadow.position.set(0,.035,0);scene.add(shadow);
- const start=performance.now();function resize(){const w=Math.max(120,canvas.clientWidth),hh=Math.max(150,canvas.clientHeight);renderer.setSize(w,hh,false);camera.aspect=w/hh;camera.updateProjectionMatrix()}resize();if(window.ResizeObserver)new ResizeObserver(resize).observe(canvas);else window.addEventListener('resize',resize);
- function animate(now){requestAnimationFrame(animate);const t=(now-start)/1000;const walk=Math.min(1,t/2.35);girl.position.x=-2.25+walk*2.15;girl.position.y=.045+Math.abs(Math.sin(t*10))*.045*(walk<1?1:.25);girl.rotation.y=Math.sin(t*2)*.035;
- legs.forEach((l,i)=>{l.pivot.rotation.x=Math.sin(t*9+(i*Math.PI))*.52*(walk<1?1:.16)});arms.forEach((a,i)=>{a.pivot.rotation.x=Math.sin(t*9+(i*Math.PI)+Math.PI)*.28;if(t>2.5&&i===1){const wave=Math.min(1,(t-2.5)*2);a.pivot.rotation.z=-.2-wave*(.85+Math.sin(t*8)*.16);a.pivot.rotation.x=-.7+Math.sin(t*8)*.13}});flower.rotation.z=Math.sin(t*2)*.12;shadow.position.x=girl.position.x;shadow.scale.setScalar(1-girl.position.y*.5);renderer.render(scene,camera)}
- animate(start);
-}
-</script>
-</body></html>');w.document.close()};
+$('cardBtn').onclick=()=>{const w=window.open('','_blank');if(!w){alert('Allow pop-ups to open your birthday card.');return}w.document.write('<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>Happy Birthday, Amuktha ♡</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(140deg,#fff7fb,#f1e8f8,#fff8ef);font-family:Georgia,serif;color:#705878;text-align:center}.card{margin:20px;padding:40px 24px;max-width:440px;background:#fffdfb;border:1px solid white;box-shadow:0 18px 50px #97749b20}h1{font-size:clamp(2.4rem,9vw,4rem);font-weight:normal;color:#a17da7}p{line-height:1.9}button{border:1px solid #e7d6e5;border-radius:30px;background:white;color:#765e7b;padding:12px 18px}</style></head><body><div class="card"><div style="font-size:48px">🎂</div><div style="letter-spacing:3px;font-size:10px">A LITTLE WISH FOR YOU</div><h1>Happy Birthday,<br>Amuktha ♡</h1><p>May your days feel softer, your laughter come easier, and your dreams grow into beautiful things. You deserve a year full of lovely surprises.</p><div style="font-size:25px">🌷 ✿ 🦋</div><p>made with love ♡</p><button onclick="window.print()">Print / save card</button></div></body></html>');w.document.close()};
 $('photoInput').onchange=e=>{const files=[...e.target.files].filter(f=>f.type.startsWith('image/')).slice(0,9);$('gallery').innerHTML='';files.forEach(file=>{const box=document.createElement('div'),img=document.createElement('img');box.className='photo';img.src=URL.createObjectURL(file);img.alt='Birthday memory';box.appendChild(img);$('gallery').appendChild(box)});if(!files.length)$('gallery').innerHTML='<div class="photo"><span>♡<br>a favourite photo</span></div><div class="photo"><span>✿<br>a lovely memory</span></div><div class="photo"><span>☁️<br>a happy moment</span></div>'};
 const melody=[[392,.32],[392,.18],[440,.5],[392,.5],[523,.5],[494,.85],[392,.32],[392,.18],[440,.5],[392,.5],[587,.5],[523,.85],[392,.32],[392,.18],[784,.5],[659,.5],[523,.5],[494,.5],[440,.85],[698,.32],[698,.18],[659,.5],[523,.5],[587,.5],[523,.95]];
 function stopMusic(){musicOn=false;musicRun++;clearTimeout(musicTimer);if(musicCtx){try{musicCtx.close()}catch(e){}musicCtx=null}$('musicBtn').textContent='♫ Play Happy Birthday';$('musicBtn').setAttribute('aria-label','Play birthday music')}async function startMusic(){if(musicOn)return;try{musicCtx=new(window.AudioContext||window.webkitAudioContext)();await musicCtx.resume();musicOn=true;const run=++musicRun;$('musicBtn').textContent='♫ Happy Birthday · On';$('musicBtn').setAttribute('aria-label','Pause birthday music');let i=0;function note(){if(!musicOn||run!==musicRun)return;if(i>=melody.length){musicTimer=setTimeout(()=>{i=0;note()},700);return}const [freq,dur]=melody[i++],o=musicCtx.createOscillator(),g=musicCtx.createGain(),t=musicCtx.currentTime;o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.10,t+.025);g.gain.setTargetAtTime(.0001,t+Math.max(.07,dur-.06),.04);o.connect(g);g.connect(musicCtx.destination);o.start(t);o.stop(t+dur);musicTimer=setTimeout(note,dur*1000)}note()}catch(e){stopMusic()}}$('musicBtn').onclick=()=>{manualChoice=true;if(musicOn)stopMusic();else startMusic()};window.addEventListener('load',()=>startMusic(),{once:true});function unlockAudio(){if(!manualChoice&&!musicOn)startMusic();document.removeEventListener('pointerdown',unlockAudio);document.removeEventListener('keydown',unlockAudio)}document.addEventListener('pointerdown',unlockAudio,{once:true,passive:true});document.addEventListener('keydown',unlockAudio,{once:true});
@@ -155,4 +119,29 @@ const floralOpenButton=document.getElementById('yesBtn');if(floralOpenButton){fl
 // Replay the little birthday walk whenever the surprise is opened.
 const birthdayWalkButton=document.getElementById('yesBtn');
 if(birthdayWalkButton){birthdayWalkButton.addEventListener('click',()=>{const scene=document.getElementById('birthdayWalkScene');if(scene){scene.classList.remove('active');void scene.offsetWidth;setTimeout(()=>scene.classList.add('active'),220)}})}
-</script></body></html>
+</script><script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+let birthday3DStarted=false;
+function startBirthday3D(){
+ if(birthday3DStarted)return;const canvas=document.getElementById("birthday3DCanvas");if(!canvas||!window.THREE)return;
+ const T=window.THREE,scene=new T.Scene(),camera=new T.PerspectiveCamera(34,1,.1,100);camera.position.set(0,1.5,7.5);camera.lookAt(0,1.35,0);
+ let renderer;try{renderer=new T.WebGLRenderer({canvas,alpha:true,antialias:true})}catch(e){console.warn("3D unavailable; keeping illustrated character",e);return}
+ birthday3DStarted=true;canvas.closest(".walk-character").classList.add("three-ready");renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.setClearColor(0,0);
+ scene.add(new T.HemisphereLight(0xfff3fb,0xb7a1bb,2));const light=new T.DirectionalLight(0xffe6dc,2.4);light.position.set(-3,5,5);scene.add(light);
+ const mat=c=>new T.MeshStandardMaterial({color:c,roughness:.8}),skin=mat(0xffd6bd),hair=mat(0x56364f),dress=mat(0xf0cce5),lav=mat(0xe3c9f5),shoe=mat(0xffeaf3),eye=mat(0x493045),white=mat(0xffffff),pink=mat(0xf1a9c5);
+ const girl=new T.Group();scene.add(girl);girl.position.x=-2.2;
+ function ball(p,m,x,y,z,sx,sy,sz){const o=new T.Mesh(new T.SphereGeometry(1,18,14),m);o.position.set(x,y,z);o.scale.set(sx,sy,sz);p.add(o);return o}
+ function cylinder(p,m,r1,r2,len,y){const o=new T.Mesh(new T.CylinderGeometry(r1,r2,len,12),m);o.position.y=y;p.add(o);return o}
+ ball(girl,hair,0,2.55,-.12,.63,.72,.43);ball(girl,hair,-.44,2.12,-.08,.17,.6,.2);ball(girl,hair,.44,2.12,-.08,.17,.6,.2);ball(girl,skin,0,2.63,.18,.49,.56,.4);ball(girl,hair,0,3.02,.12,.5,.27,.42);
+ for(let i=-2;i<=2;i++)ball(girl,hair,i*.16,2.93,.43,.13,.23,.12);
+ for(const x of [-.19,.19]){ball(girl,white,x,2.68,.535,.105,.14,.045);ball(girl,eye,x+.01,2.67,.574,.065,.095,.025);ball(girl,white,x+.025,2.71,.595,.022,.03,.01);ball(girl,pink,x*1.75,2.5,.51,.09,.04,.018)}
+ ball(girl,pink,-.36,3.12,.28,.13,.09,.055);ball(girl,pink,-.22,3.12,.28,.13,.09,.055);
+ ball(girl,skin,0,1.85,0,.31,.37,.24);ball(girl,lav,0,1.87,.02,.35,.39,.28);const skirt=new T.Mesh(new T.ConeGeometry(.62,.95,28),dress);skirt.position.set(0,1.25,0);skirt.scale.z=.72;girl.add(skirt);
+ const arms=[],legs=[];for(const x of [-.32,.32]){const p=new T.Group();p.position.set(x,2.02,.02);girl.add(p);cylinder(p,skin,.1,.08,.45,-.23);ball(p,lav,0,-.07,0,.14,.14,.14);ball(p,skin,0,-.48,.02,.1,.11,.1);arms.push({p,side:Math.sign(x)})}
+ for(const x of [-.2,.2]){const p=new T.Group();p.position.set(x,.88,0);girl.add(p);cylinder(p,skin,.09,.08,.4,-.2);ball(p,shoe,.02,-.42,.09,.17,.09,.23);legs.push(p)}
+ const flower=new T.Group();flower.position.set(.72,2.55,.15);girl.add(flower);for(let i=0;i<5;i++){let a=i*Math.PI*2/5;ball(flower,pink,Math.cos(a)*.12,Math.sin(a)*.12,0,.08,.12,.05)}ball(flower,mat(0xffe8a9),0,0,.04,.06,.06,.04);
+ const start=performance.now(),reduce=matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;function resize(){let w=Math.max(100,canvas.clientWidth),h=Math.max(150,canvas.clientHeight);renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}resize();if(window.ResizeObserver)new ResizeObserver(resize).observe(canvas);
+ function animate(now){requestAnimationFrame(animate);let t=(now-start)/1000,walk=reduce?1:Math.min(1,t/2.3);girl.position.x=-2.2+walk*2.05;girl.position.y=reduce?0:Math.abs(Math.sin(t*10))*.04;legs.forEach((p,i)=>p.rotation.x=reduce?0:Math.sin(t*9+i*Math.PI)*.48*(walk<1?1:.15));arms.forEach((a,i)=>{a.p.rotation.x=reduce?0:Math.sin(t*9+i*Math.PI+Math.PI)*.25;if(!reduce&&t>2.5&&i===1){a.p.rotation.z=-.8+Math.sin(t*8)*.13}});flower.rotation.z=reduce?0:Math.sin(t*2)*.12;renderer.render(scene,camera)}animate(start)
+}
+</script>
+</body></html>
