@@ -1,9 +1,11 @@
-# Amuktha Birthday Surprise 💜
+# A Little Surprise for Amuktha 💜
 
-A mobile-friendly interactive birthday page in a dreamy lavender Pinterest style.
+A mobile-friendly lavender birthday surprise page with a YES/NO intro, birthday greeting, confetti, secret note, birthday wish generator, compliments, jar of happy reminders, moonlight theme, optional browser-generated celebration tones, share button, printable birthday card, and a local photo gallery.
 
-Features: YES/NO interaction, birthday greeting, animated floating hearts and sparkles, confetti, and a hidden note.
+## Live site
+https://sanju0119z.github.io/amuktha-birthday/
 
-## GitHub Pages
-This repository is designed to publish from the `main` branch and `/(root)` folder. Once Pages is enabled, the site URL is:
-https://Sanju0119z.github.io/amuktha-birthday/
+## Notes
+- Photo selections stay in the visitor's browser and are not uploaded; refreshing clears them.
+- No external libraries or third-party assets are required.
+- GitHub Pages serves the static website from the root of `main`.
